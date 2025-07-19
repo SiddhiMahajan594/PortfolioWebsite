@@ -158,6 +158,8 @@ header {
     transition: all 0.2s ease;
     position: relative;
     user-select: none;
+    -webkit-tap-highlight-color: transparent;
+    touch-action: manipulation;
 }
 
 .key:hover {
@@ -285,24 +287,60 @@ header {
     }
 }
 
-@media (max-width: 768px) {
+@media (max-width: 1024px) {
     .container {
-        padding: 1rem;
-    }
-    
-    .title {
-        font-size: 2.5rem;
-        flex-direction: column;
-        gap: 0.1rem;
-    }
-    
-    .typing-text {
-        font-size: 2.5rem;
+        padding: 1.5rem;
     }
     
     .keyboard {
-        padding: 1rem;
+        padding: 1.2rem;
         gap: 0.3rem;
+        max-width: 900px;
+    }
+    
+    .key {
+        min-width: 45px;
+        height: 45px;
+        padding: 0.7rem 0.5rem;
+        font-size: 0.75rem;
+    }
+    
+    .space-key {
+        min-width: 200px;
+    }
+    
+    .title {
+        font-size: 3rem;
+    }
+}
+
+@media (max-width: 768px) {
+    .container {
+        padding: 0.5rem;
+    }
+    
+    .title {
+        font-size: 2rem;
+        flex-direction: column;
+        gap: 0.1rem;
+        margin-bottom: 2rem;
+    }
+    
+    .typing-text {
+        font-size: 2rem;
+    }
+    
+    .keyboard {
+        padding: 0.5rem;
+        gap: 0.2rem;
+        max-width: 100%;
+        border-radius: 10px;
+    }
+    
+    .keyboard-row {
+        gap: 0.2rem;
+        flex-wrap: wrap;
+        justify-content: center;
     }
     
     .key {
@@ -310,50 +348,217 @@ header {
         height: 40px;
         padding: 0.6rem 0.4rem;
         font-size: 0.7rem;
+        border-radius: 6px;
+        flex-shrink: 0;
     }
     
     .space-key {
-        min-width: 200px;
+        min-width: 180px;
+        max-width: 200px;
     }
     
-
-    
-    .content-section {
-        padding: 1.5rem;
+    .function-key {
+        min-width: 35px;
+        font-size: 0.65rem;
     }
     
-    .projects-grid {
-        grid-template-columns: 1fr;
+    .tab-key {
+        min-width: 70px;
     }
     
-    .contact-info {
-        grid-template-columns: 1fr;
+    .caps-key {
+        min-width: 75px;
+    }
+    
+    .shift-key {
+        min-width: 80px;
+    }
+    
+    .backspace-key {
+        min-width: 90px;
+    }
+    
+    .enter-key {
+        min-width: 70px;
+        height: 40px;
+    }
+    
+    .control-key {
+        min-width: 60px;
+    }
+    
+    .arrow-key {
+        min-width: 40px;
+    }
+    
+    .number-key, .symbol-key {
+        gap: 1px;
+    }
+    
+    .top-char {
+        font-size: 0.6rem;
+    }
+    
+    .bottom-char {
+        font-size: 0.8rem;
     }
 }
 
 @media (max-width: 480px) {
-    .keyboard-row {
-        gap: 0.2rem;
-    }
-    
-    .key {
-        min-width: 35px;
-        height: 35px;
-        padding: 0.4rem 0.3rem;
-        font-size: 0.6rem;
-    }
-    
-    .space-key {
-        min-width: 150px;
+    .container {
+        padding: 0.3rem;
     }
     
     .title {
-        font-size: 2rem;
+        font-size: 1.6rem;
         flex-direction: column;
         gap: 0.1rem;
+        margin-bottom: 1.5rem;
     }
     
     .typing-text {
-        font-size: 2rem;
+        font-size: 1.6rem;
+    }
+    
+    .keyboard {
+        padding: 0.4rem;
+        gap: 0.15rem;
+        border-radius: 8px;
+    }
+    
+    .keyboard-row {
+        gap: 0.15rem;
+        flex-wrap: wrap;
+        justify-content: center;
+    }
+    
+    .key {
+        min-width: 32px;
+        height: 32px;
+        padding: 0.4rem 0.25rem;
+        font-size: 0.6rem;
+        border-radius: 4px;
+        flex-shrink: 0;
+    }
+    
+    .space-key {
+        min-width: 140px;
+        max-width: 160px;
+    }
+    
+    .function-key {
+        min-width: 28px;
+        font-size: 0.55rem;
+    }
+    
+    .tab-key {
+        min-width: 55px;
+    }
+    
+    .caps-key {
+        min-width: 60px;
+    }
+    
+    .shift-key {
+        min-width: 65px;
+    }
+    
+    .backspace-key {
+        min-width: 75px;
+    }
+    
+    .enter-key {
+        min-width: 55px;
+        height: 32px;
+    }
+    
+    .control-key {
+        min-width: 45px;
+    }
+    
+    .arrow-key {
+        min-width: 32px;
+    }
+    
+    .number-key, .symbol-key {
+        gap: 0.5px;
+    }
+    
+    .top-char {
+        font-size: 0.5rem;
+    }
+    
+    .bottom-char {
+        font-size: 0.7rem;
+    }
+}
+
+@media (max-width: 360px) {
+    .container {
+        padding: 0.2rem;
+    }
+    
+    .title {
+        font-size: 1.4rem;
+        margin-bottom: 1rem;
+    }
+    
+    .typing-text {
+        font-size: 1.4rem;
+    }
+    
+    .keyboard {
+        padding: 0.3rem;
+        gap: 0.1rem;
+    }
+    
+    .keyboard-row {
+        gap: 0.1rem;
+    }
+    
+    .key {
+        min-width: 28px;
+        height: 28px;
+        padding: 0.3rem 0.2rem;
+        font-size: 0.55rem;
+    }
+    
+    .space-key {
+        min-width: 120px;
+        max-width: 140px;
+    }
+    
+    .function-key {
+        min-width: 25px;
+        font-size: 0.5rem;
+    }
+    
+    .tab-key {
+        min-width: 45px;
+    }
+    
+    .caps-key {
+        min-width: 50px;
+    }
+    
+    .shift-key {
+        min-width: 55px;
+    }
+    
+    .backspace-key {
+        min-width: 65px;
+    }
+    
+    .enter-key {
+        min-width: 45px;
+        height: 28px;
+    }
+    
+    .control-key {
+        min-width: 40px;
+    }
+    
+    .arrow-key {
+        min-width: 28px;
     }
 } 
