@@ -1,0 +1,250 @@
+/* Reset and Base Styles */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+    background-color: #FFF9EF; /* Floral White */
+    color: #333;
+    line-height: 1.6;
+    overflow-x: hidden;
+}
+
+.container {
+    max-width: 1400px;
+    margin: 0 auto;
+    padding: 2rem;
+}
+
+/* Header */
+header {
+    text-align: center;
+    margin-bottom: 3rem;
+}
+
+.title {
+    font-size: 3.5rem;
+    font-weight: 700;
+    color: #333;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    margin-bottom: 1rem;
+}
+
+/* Keyboard Container */
+.keyboard-container {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 4rem;
+}
+
+.keyboard {
+    background: #FFF9EF;
+    border: 3px solid #238CFF; /* Dodger Blue */
+    border-radius: 15px;
+    padding: 2rem;
+    box-shadow: 0 10px 30px rgba(35, 140, 255, 0.1);
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    max-width: 1200px;
+    width: 100%;
+}
+
+.keyboard-row {
+    display: flex;
+    gap: 0.5rem;
+    justify-content: center;
+}
+
+
+
+/* Key Base Styles */
+.key {
+    background: #FFF9EF;
+    border: 2px solid #238CFF; /* Dodger Blue */
+    border-radius: 8px;
+    padding: 1rem 0.8rem;
+    min-width: 60px;
+    height: 60px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 500;
+    font-size: 0.9rem;
+    color: #333;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    position: relative;
+    user-select: none;
+}
+
+.key:hover {
+    background: rgba(35, 140, 255, 0.1);
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(35, 140, 255, 0.2);
+}
+
+.key:active {
+    transform: translateY(0);
+    box-shadow: 0 2px 6px rgba(35, 140, 255, 0.3);
+}
+
+/* Special Key Sizes */
+.function-key {
+    min-width: 50px;
+    font-size: 0.8rem;
+}
+
+.tab-key {
+    min-width: 80px;
+}
+
+.caps-key {
+    min-width: 90px;
+}
+
+.shift-key {
+    min-width: 100px;
+}
+
+.backspace-key {
+    min-width: 120px;
+}
+
+.enter-key {
+    min-width: 80px;
+    height: 60px;
+}
+
+.space-key {
+    min-width: 300px;
+}
+
+.control-key {
+    min-width: 70px;
+}
+
+.arrow-key {
+    min-width: 60px;
+}
+
+
+
+/* Number and Symbol Keys */
+.number-key, .symbol-key {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 2px;
+}
+
+.top-char {
+    font-size: 0.8rem;
+    font-weight: 600;
+    color: #666;
+}
+
+.bottom-char {
+    font-size: 1rem;
+    font-weight: 500;
+    color: #333;
+}
+
+
+
+/* Animations */
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* Responsive Design */
+@media (max-width: 1200px) {
+    .keyboard {
+        padding: 1.5rem;
+        gap: 0.4rem;
+    }
+    
+    .key {
+        min-width: 50px;
+        height: 50px;
+        padding: 0.8rem 0.6rem;
+        font-size: 0.8rem;
+    }
+    
+    .space-key {
+        min-width: 250px;
+    }
+}
+
+@media (max-width: 768px) {
+    .container {
+        padding: 1rem;
+    }
+    
+    .title {
+        font-size: 2.5rem;
+    }
+    
+    .keyboard {
+        padding: 1rem;
+        gap: 0.3rem;
+    }
+    
+    .key {
+        min-width: 40px;
+        height: 40px;
+        padding: 0.6rem 0.4rem;
+        font-size: 0.7rem;
+    }
+    
+    .space-key {
+        min-width: 200px;
+    }
+    
+
+    
+    .content-section {
+        padding: 1.5rem;
+    }
+    
+    .projects-grid {
+        grid-template-columns: 1fr;
+    }
+    
+    .contact-info {
+        grid-template-columns: 1fr;
+    }
+}
+
+@media (max-width: 480px) {
+    .keyboard-row {
+        gap: 0.2rem;
+    }
+    
+    .key {
+        min-width: 35px;
+        height: 35px;
+        padding: 0.4rem 0.3rem;
+        font-size: 0.6rem;
+    }
+    
+    .space-key {
+        min-width: 150px;
+    }
+    
+    .title {
+        font-size: 2rem;
+    }
+} 
