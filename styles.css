@@ -7,16 +7,24 @@
 
 body {
     font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-    background-color: #FFF9EF; /* Floral White */
+    background-color: rgb(255, 247, 214); /* Floral White */
     color: #333;
     line-height: 1.6;
     overflow-x: hidden;
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 
 .container {
     max-width: 1400px;
-    margin: 0 auto;
+    width: 100%;
     padding: 2rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
 }
 
 /* Header */
@@ -28,10 +36,62 @@ header {
 .title {
     font-size: 3.5rem;
     font-weight: 700;
-    color: #333;
+    color: #238CFF; /* Dodger Blue */
     letter-spacing: 0.1em;
-    text-transform: uppercase;
     margin-bottom: 1rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.2rem;
+}
+
+.typing-text {
+    display: inline-block;
+    overflow: hidden;
+    white-space: nowrap;
+    border-right: 3px solid #238CFF; /* Dodger Blue */
+}
+
+.siddhi-text {
+    color: #238CFF; /* Dodger Blue */
+}
+
+.portfolio-text {
+    color: #FEDD6C; /* Naples Yellow */
+}
+
+.cursor {
+    color: #238CFF; /* Dodger Blue */
+    font-weight: 700;
+    animation: blink 1s infinite;
+    opacity: 0;
+}
+
+@keyframes typing {
+    from {
+        width: 0;
+    }
+    to {
+        width: 100%;
+    }
+}
+
+@keyframes blink-caret {
+    from, to {
+        border-color: transparent;
+    }
+    50% {
+        border-color: #238CFF; /* Dodger Blue */
+    }
+}
+
+@keyframes blink {
+    0%, 50% {
+        opacity: 1;
+    }
+    51%, 100% {
+        opacity: 0;
+    }
 }
 
 /* Keyboard Container */
@@ -42,11 +102,11 @@ header {
 }
 
 .keyboard {
-    background: #FFF9EF;
+    background: #ffffff49; /* Floral White */
     border: 3px solid #238CFF; /* Dodger Blue */
     border-radius: 15px;
     padding: 2rem;
-    box-shadow: 0 10px 30px rgba(35, 140, 255, 0.1);
+    box-shadow: 0 10px 30px rgba(254, 221, 108, 0.15); /* Naples Yellow shadow */
     display: flex;
     flex-direction: column;
     gap: 0.5rem;
@@ -60,11 +120,28 @@ header {
     justify-content: center;
 }
 
+.keyboard-rows-container {
+    display: grid;
+    grid-template-columns: 1fr auto;
+    gap: 0.5rem;
+    align-items: start;
+}
 
+.asdf-row {
+    display: flex;
+    gap: 0.5rem;
+    justify-content: center;
+}
+
+.zxcv-row {
+    display: flex;
+    gap: 0.5rem;
+    justify-content: center;
+}
 
 /* Key Base Styles */
 .key {
-    background: #FFF9EF;
+    background: #ffffff; /* Linen */
     border: 2px solid #238CFF; /* Dodger Blue */
     border-radius: 8px;
     padding: 1rem 0.8rem;
@@ -73,6 +150,7 @@ header {
     display: flex;
     align-items: center;
     justify-content: center;
+    font-family: 'Courier New', 'Monaco', 'Menlo', 'Consolas', monospace;
     font-weight: 500;
     font-size: 0.9rem;
     color: #333;
@@ -83,14 +161,32 @@ header {
 }
 
 .key:hover {
-    background: rgba(35, 140, 255, 0.1);
+    background: #F0DF96; /* Flax */
     transform: translateY(-2px);
-    box-shadow: 0 4px 12px rgba(35, 140, 255, 0.2);
+    box-shadow: 0 4px 12px rgba(248, 194, 46, 0.3); /* Saffron shadow */
+    border-color: #F8C22E; /* Saffron border on hover */
 }
 
 .key:active {
     transform: translateY(0);
-    box-shadow: 0 2px 6px rgba(35, 140, 255, 0.3);
+    box-shadow: 0 2px 6px rgba(248, 194, 46, 0.4); /* Saffron shadow */
+    background: #F8C22E; /* Saffron */
+    border-color: #FEDD6C; /* Naples Yellow border when active */
+}
+
+/* Key highlighting for typing */
+.key-highlighted {
+    background: #238CFF !important; /* Dodger Blue */
+    color: white !important;
+    transform: translateY(-3px) scale(1.05) !important;
+    box-shadow: 0 8px 20px rgba(35, 140, 255, 0.4) !important;
+    transition: all 0.2s ease !important;
+    z-index: 10;
+    position: relative;
+}
+
+.space-key.key-highlighted {
+    transform: translateY(-3px) scale(1.02) !important;
 }
 
 /* Special Key Sizes */
@@ -137,6 +233,7 @@ header {
 /* Number and Symbol Keys */
 .number-key, .symbol-key {
     display: flex;
+
     flex-direction: column;
     align-items: center;
     justify-content: center;
@@ -195,6 +292,12 @@ header {
     
     .title {
         font-size: 2.5rem;
+        flex-direction: column;
+        gap: 0.1rem;
+    }
+    
+    .typing-text {
+        font-size: 2.5rem;
     }
     
     .keyboard {
@@ -245,6 +348,12 @@ header {
     }
     
     .title {
+        font-size: 2rem;
+        flex-direction: column;
+        gap: 0.1rem;
+    }
+    
+    .typing-text {
         font-size: 2rem;
     }
 } 

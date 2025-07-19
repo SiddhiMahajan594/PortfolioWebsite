@@ -42,9 +42,8 @@ function handleKeyPress(event) {
     
     if (keyElement) {
         addKeyPressEffect(keyElement);
+        highlightKey(keyElement);
     }
-    
-
 }
 
 // Handle physical keyboard key release
@@ -62,14 +61,132 @@ function handleKeyRelease(event) {
 function findKeyElement(key) {
     const keyElements = document.querySelectorAll('.key');
     
-    for (let element of keyElements) {
-        const text = element.textContent.toLowerCase();
-        if (text.includes(key) || element.textContent.toLowerCase() === key) {
-            return element;
+    // Special handling for space character - check this FIRST
+    if (key === ' ') {
+        for (let element of keyElements) {
+            if (element.classList.contains('space-key')) {
+                return element;
+            }
+        }
+        return null; // Return null if space key not found
+    }
+    
+    // Key mapping for special characters and common keys
+    const keyMap = {
+        'enter': 'enter',
+        'backspace': 'backspace',
+        'tab': 'tab',
+        'caps lock': 'caps',
+        'shift': 'shift',
+        'ctrl': 'ctrl',
+        'alt': 'alt',
+        'escape': 'esc',
+        'esc': 'esc',
+        'f1': 'f1',
+        'f2': 'f2',
+        'f3': 'f3',
+        'f4': 'f4',
+        'f5': 'f5',
+        'f6': 'f6',
+        'f7': 'f7',
+        'f8': 'f8',
+        'f9': 'f9',
+        'f10': 'f10',
+        'f11': 'f11',
+        'f12': 'f12',
+        'f13': 'f13'
+    };
+    
+    // Check if it's a mapped key
+    if (keyMap[key]) {
+        for (let element of keyElements) {
+            const text = element.textContent.toLowerCase();
+            if (text.includes(keyMap[key])) {
+                return element;
+            }
+        }
+    }
+    
+    // Check for letter keys
+    if (key.length === 1 && /[a-z]/.test(key)) {
+        for (let element of keyElements) {
+            const text = element.textContent.toLowerCase();
+            if (text === key) {
+                return element;
+            }
+        }
+    }
+    
+    // Check for number keys
+    if (key.length === 1 && /[0-9]/.test(key)) {
+        for (let element of keyElements) {
+            const text = element.textContent.toLowerCase();
+            if (text.includes(key)) {
+                return element;
+            }
+        }
+    }
+    
+    // Check for symbol keys
+    const symbolMap = {
+        '`': '`',
+        '~': '~',
+        '!': '!',
+        '@': '@',
+        '#': '#',
+        '$': '$',
+        '%': '%',
+        '^': '^',
+        '&': '&',
+        '*': '*',
+        '(': '(',
+        ')': ')',
+        '-': '-',
+        '_': '_',
+        '=': '=',
+        '+': '+',
+        '[': '[',
+        '{': '{',
+        ']': ']',
+        '}': '}',
+        '\\': '\\',
+        '|': '|',
+        ';': ';',
+        ':': ':',
+        "'": "'",
+        '"': '"',
+        ',': ',',
+        '<': '<',
+        '.': '.',
+        '>': '>',
+        '/': '/',
+        '?': '?'
+    };
+    
+    if (symbolMap[key]) {
+        for (let element of keyElements) {
+            const text = element.textContent.toLowerCase();
+            if (text.includes(symbolMap[key])) {
+                return element;
+            }
         }
     }
     
     return null;
+}
+
+// Highlight key with enhanced visual effect
+function highlightKey(keyElement) {
+    // Remove any existing highlight
+    keyElement.classList.remove('key-highlighted');
+    
+    // Add highlight class
+    keyElement.classList.add('key-highlighted');
+    
+    // Remove highlight after animation
+    setTimeout(() => {
+        keyElement.classList.remove('key-highlighted');
+    }, 300);
 }
 
 // Add keyboard sound effects (optional)
@@ -109,21 +226,91 @@ function playKeySound(audioContext) {
 
 // Add typing effect to title
 function addTypingEffect() {
-    const title = document.querySelector('.title');
-    const originalText = title.textContent;
-    title.textContent = '';
+    const typingText = document.querySelector('.typing-text');
+    const cursor = document.querySelector('.cursor');
     
-    let i = 0;
-    const typeWriter = () => {
-        if (i < originalText.length) {
-            title.textContent += originalText.charAt(i);
-            i++;
-            setTimeout(typeWriter, 100);
+    // Reset the animation
+    typingText.style.animation = 'none';
+    cursor.style.opacity = '0';
+    
+    // Trigger reflow
+    typingText.offsetHeight;
+    
+    // Start the animation
+    setTimeout(() => {
+        typeSiddhisPortfolio();
+    }, 500);
+}
+
+// Type "Siddhi's Portfolio" with key highlighting
+function typeSiddhisPortfolio() {
+    const text = "Siddhi's Portfolio";
+    const typingText = document.querySelector('.typing-text');
+    const cursor = document.querySelector('.cursor');
+    
+    // Clear the text
+    typingText.innerHTML = '';
+    
+    // Show cursor
+    cursor.style.opacity = '1';
+    cursor.style.animation = 'blink 1s infinite';
+    
+    let currentText = '';
+    let index = 0;
+    
+    const typeNextChar = () => {
+        if (index < text.length) {
+            const char = text[index];
+            currentText += char;
+            
+            // Update the text with proper styling
+            if (index < 8) { // "Siddhi's "
+                typingText.innerHTML = `<span class="siddhi-text">${currentText}</span>`;
+            } else { // "Portfolio"
+                const siddhiPart = text.substring(0, 8);
+                const portfolioPart = text.substring(8, index + 1);
+                typingText.innerHTML = `<span class="siddhi-text">${siddhiPart}</span><span class="portfolio-text">${portfolioPart}</span>`;
+            }
+            
+            // Highlight the corresponding key
+            highlightKeyForChar(char);
+            
+            index++;
+            
+            // Continue typing after a delay
+            setTimeout(typeNextChar, 400);
+        } else {
+            // Typing complete, keep cursor blinking
+            cursor.style.animation = 'blink 1s infinite';
         }
     };
     
-    // Start typing effect after a short delay
-    setTimeout(typeWriter, 500);
+    typeNextChar();
+}
+
+// Highlight key for specific character
+function highlightKeyForChar(char) {
+    let keyToFind = char.toLowerCase();
+    
+    // Special handling for apostrophe
+    if (char === "'") {
+        keyToFind = "'";
+    }
+    
+    const keyElement = findKeyElement(keyToFind);
+    
+    if (keyElement) {
+        // Remove any existing highlight
+        keyElement.classList.remove('key-highlighted');
+        
+        // Add highlight class
+        keyElement.classList.add('key-highlighted');
+        
+        // Remove highlight after animation
+        setTimeout(() => {
+            keyElement.classList.remove('key-highlighted');
+        }, 300);
+    }
 }
 
 // Add hover effects for better interactivity
