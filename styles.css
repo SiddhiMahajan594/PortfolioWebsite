@@ -1,3 +1,13 @@
+/* SCSS Color Palette as CSS Custom Properties */
+:root {
+    --dun: #CDC3B3;
+    --gray: #847C79;
+    --dun-2: #D7C9AC;
+    --giants-orange: #EF5C2D;
+    --sapphire: #1B51A7;
+    --space-cadet: #161632;
+}
+
 /* Reset and Base Styles */
 * {
     margin: 0;
@@ -7,8 +17,8 @@
 
 body {
     font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-    background-color: rgb(255, 247, 214); /* Floral White */
-    color: #333;
+    background-color: var(--dun-2);
+    color: var(--space-cadet);
     line-height: 1.6;
     overflow-x: hidden;
     min-height: 100vh;
@@ -33,35 +43,49 @@ header {
     margin-bottom: 3rem;
 }
 
+@font-face {
+    font-family: 'Namaku';
+    src: url('./Namaku.ttf') format('truetype');
+    font-weight: normal;
+    font-style: normal;
+    -webkit-text-stroke: 5px var(--space-cadet);
+}
+
 .title {
-    font-size: 3.5rem;
+    font-family: 'Namaku', 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+    font-size: 5rem;
     font-weight: 700;
-    color: #238CFF; /* Dodger Blue */
+    color: var(--space-cadet);
     letter-spacing: 0.1em;
     margin-bottom: 1rem;
     display: flex;
     align-items: center;
     justify-content: center;
     gap: 0.2rem;
+    text-shadow: 
+        -1px -1px 0 var(--space-cadet),
+        1px -1px 0 var(--space-cadet),
+        -1px 1px 0 var(--space-cadet),
+        1px 1px 0 var(--space-cadet);
 }
 
 .typing-text {
     display: inline-block;
     overflow: hidden;
     white-space: nowrap;
-    border-right: 3px solid #238CFF; /* Dodger Blue */
+    border-right: 3px solid var(--sapphire);
 }
 
 .siddhi-text {
-    color: #238CFF; /* Dodger Blue */
+    color: var(--sapphire);
 }
 
 .portfolio-text {
-    color: #FEDD6C; /* Naples Yellow */
+    color: var(--giants-orange);
 }
 
 .cursor {
-    color: #238CFF; /* Dodger Blue */
+    color: var(--space-cadet);
     font-weight: 700;
     animation: blink 1s infinite;
     opacity: 0;
@@ -81,7 +105,7 @@ header {
         border-color: transparent;
     }
     50% {
-        border-color: #238CFF; /* Dodger Blue */
+        border-color: var(--space-cadet);
     }
 }
 
@@ -102,16 +126,19 @@ header {
 }
 
 .keyboard {
-    background: #ffffff49; /* Floral White */
-    border: 3px solid #238CFF; /* Dodger Blue */
-    border-radius: 15px;
-    padding: 2rem;
-    box-shadow: 0 10px 30px rgba(254, 221, 108, 0.15); /* Naples Yellow shadow */
+    background: var(--dun);
+    border: 3px solid var(--space-cadet);
+    border-radius: 12px;
+    padding: 1.5rem;
+    box-shadow: 
+        0 8px 16px rgba(22, 22, 50, 0.15),
+        0 4px 8px rgba(22, 22, 50, 0.08);
     display: flex;
     flex-direction: column;
-    gap: 0.5rem;
+    gap: 0.4rem;
     max-width: 1200px;
     width: 100%;
+    position: relative;
 }
 
 .keyboard-row {
@@ -141,93 +168,105 @@ header {
 
 /* Key Base Styles */
 .key {
-    background: #ffffff; /* Linen */
-    border: 2px solid #238CFF; /* Dodger Blue */
-    border-radius: 8px;
-    padding: 1rem 0.8rem;
-    min-width: 60px;
-    height: 60px;
+    background: var(--dun);
+    border: 2px solid var(--space-cadet);
+    border-radius: 6px;
+    padding: 0.8rem 0.6rem;
+    min-width: 55px;
+    height: 55px;
     display: flex;
     align-items: center;
     justify-content: center;
-    font-family: 'Courier New', 'Monaco', 'Menlo', 'Consolas', monospace;
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
     font-weight: 500;
-    font-size: 0.9rem;
-    color: #333;
+    font-size: 0.85rem;
+    color: var(--space-cadet);
     cursor: pointer;
-    transition: all 0.2s ease;
+    transition: all 0.1s ease;
     position: relative;
     user-select: none;
     -webkit-tap-highlight-color: transparent;
     touch-action: manipulation;
+    box-shadow: 
+        3px 3px 0 #000,
+        0 0 0 1px #000;
 }
 
 .key:hover {
-    background: #F0DF96; /* Flax */
-    transform: translateY(-2px);
-    box-shadow: 0 4px 12px rgba(248, 194, 46, 0.3); /* Saffron shadow */
-    border-color: #F8C22E; /* Saffron border on hover */
+    background: var(--giants-orange);
+    color: white;
+    transform: translateY(-1px);
+    box-shadow: 
+        2px 2px 0 #000,
+        0 0 0 1px #000;
+    border-color: var(--giants-orange);
 }
 
 .key:active {
-    transform: translateY(0);
-    box-shadow: 0 2px 6px rgba(248, 194, 46, 0.4); /* Saffron shadow */
-    background: #F8C22E; /* Saffron */
-    border-color: #FEDD6C; /* Naples Yellow border when active */
+    transform: translateY(1px);
+    background: var(--sapphire);
+    color: white;
+    box-shadow: 
+        1px 1px 0 #000,
+        0 0 0 1px #000,
+        inset 0 1px 2px rgba(0, 0, 0, 0.1);
+    border-color: var(--sapphire);
 }
 
 /* Key highlighting for typing */
 .key-highlighted {
-    background: #238CFF !important; /* Dodger Blue */
+    background: var(--giants-orange) !important;
     color: white !important;
-    transform: translateY(-3px) scale(1.05) !important;
-    box-shadow: 0 8px 20px rgba(35, 140, 255, 0.4) !important;
-    transition: all 0.2s ease !important;
+    transform: translateY(-1px) scale(1.02) !important;
+    box-shadow: 
+        2px 2px 0 #000,
+        0 0 0 1px #000 !important;
+    transition: all 0.1s ease !important;
     z-index: 10;
     position: relative;
 }
 
 .space-key.key-highlighted {
-    transform: translateY(-3px) scale(1.02) !important;
+    transform: translateY(-1px) scale(1.01) !important;
 }
 
 /* Special Key Sizes */
 .function-key {
-    min-width: 50px;
-    font-size: 0.8rem;
+    min-width: 45px;
+    font-size: 0.75rem;
 }
 
 .tab-key {
-    min-width: 80px;
-}
-
-.caps-key {
-    min-width: 90px;
-}
-
-.shift-key {
-    min-width: 100px;
-}
-
-.backspace-key {
-    min-width: 120px;
-}
-
-.enter-key {
-    min-width: 80px;
-    height: 60px;
-}
-
-.space-key {
-    min-width: 300px;
-}
-
-.control-key {
     min-width: 70px;
 }
 
-.arrow-key {
+.caps-key {
+    min-width: 80px;
+}
+
+.shift-key {
+    min-width: 90px;
+}
+
+.backspace-key {
+    min-width: 100px;
+}
+
+.enter-key {
+    min-width: 70px;
+    height: 55px;
+}
+
+.space-key {
+    min-width: 280px;
+}
+
+.control-key {
     min-width: 60px;
+}
+
+.arrow-key {
+    min-width: 55px;
 }
 
 
@@ -235,23 +274,25 @@ header {
 /* Number and Symbol Keys */
 .number-key, .symbol-key {
     display: flex;
-
     flex-direction: column;
     align-items: center;
     justify-content: center;
     gap: 2px;
+    position: relative;
 }
 
+
+
 .top-char {
-    font-size: 0.8rem;
-    font-weight: 600;
-    color: #666;
+    font-size: 0.75rem;
+    font-weight: 500;
+    color: var(--space-cadet);
 }
 
 .bottom-char {
-    font-size: 1rem;
+    font-size: 0.9rem;
     font-weight: 500;
-    color: #333;
+    color: var(--space-cadet);
 }
 
 
