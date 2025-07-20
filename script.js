@@ -5,7 +5,7 @@ const keys = document.querySelectorAll('.key');
 document.addEventListener('DOMContentLoaded', function() {
     initializeKeyboard();
     addKeyboardSoundEffects();
-    addTypingEffect();
+    // addTypingEffect();
 });
 
 // Initialize keyboard functionality
@@ -248,8 +248,9 @@ function typeSiddhisPortfolio() {
     const typingText = document.querySelector('.typing-text');
     const cursor = document.querySelector('.cursor');
     
-    // Clear the text
+    // Clear the text and make it visible
     typingText.innerHTML = '';
+    typingText.style.opacity = '1';
     
     // Show cursor
     cursor.style.opacity = '1';
@@ -317,11 +318,19 @@ function highlightKeyForChar(char) {
 function addHoverEffects() {
     keys.forEach(key => {
         key.addEventListener('mouseenter', function() {
-            this.style.transform = 'translateY(-2px) scale(1.05)';
+            gsap.to(this, {
+                y: -2,
+                duration: 0.1,
+                ease: "power2.out"
+            });
         });
         
         key.addEventListener('mouseleave', function() {
-            this.style.transform = '';
+            gsap.to(this, {
+                y: 0,
+                duration: 0.1,
+                ease: "power2.out"
+            });
         });
     });
 }
@@ -357,11 +366,335 @@ function addLoadingAnimation() {
     }
 }
 
+// Flying keys animation using GSAP with different animations for each key type
+function animateFlyingKeys() {
+    const keys = document.querySelectorAll('.key');
+    const keyboard = document.querySelector('.keyboard');
+    
+    // Animate keyboard appearance
+    gsap.to(keyboard, {
+        opacity: 1,
+        scale: 1,
+        duration: 1,
+        ease: "back.out(1.7)"
+    });
+    
+    // Different animations for different key types
+    keys.forEach((key, index) => {
+        const keyType = getKeyType(key);
+        const animation = getKeyAnimation(keyType, index);
+        
+        // Set initial position based on animation type
+        gsap.set(key, animation.initial);
+        
+        // Animate to final position
+        gsap.to(key, {
+            ...animation.final,
+            delay: index * 0.05, // Slower staggered timing
+            onComplete: () => {
+                if (index === keys.length - 1) {
+                    // Start typing animation after all keys have settled
+                    setTimeout(() => {
+                        typeSiddhisPortfolio();
+                    }, 800);
+                }
+            }
+        });
+    });
+}
+
+// Get the type of key for animation
+function getKeyType(key) {
+    if (key.classList.contains('function-key')) return 'function';
+    if (key.classList.contains('number-key')) return 'number';
+    if (key.classList.contains('letter-key')) return 'letter';
+    if (key.classList.contains('symbol-key')) return 'symbol';
+    if (key.classList.contains('space-key')) return 'space';
+    if (key.classList.contains('enter-key')) return 'enter';
+    if (key.classList.contains('backspace-key')) return 'backspace';
+    if (key.classList.contains('shift-key')) return 'shift';
+    if (key.classList.contains('control-key')) return 'control';
+    if (key.classList.contains('arrow-key')) return 'arrow';
+    if (key.classList.contains('tab-key')) return 'tab';
+    if (key.classList.contains('caps-key')) return 'caps';
+    return 'default';
+}
+
+// Get animation configuration for each key type
+function getKeyAnimation(keyType, index) {
+    const animations = {
+        function: {
+            initial: {
+                opacity: 0,
+                scale: 0,
+                rotation: 720,
+                x: () => (Math.random() - 0.5) * window.innerWidth * 3,
+                y: () => -window.innerHeight - 100,
+                z: () => Math.random() * 2000
+            },
+            final: {
+                opacity: 1,
+                scale: 1,
+                rotation: 0,
+                x: 0,
+                y: 0,
+                z: 0,
+                duration: 3,
+                ease: "elastic.out(1, 0.3)"
+            }
+        },
+        number: {
+            initial: {
+                opacity: 0,
+                scale: 0,
+                rotation: -360,
+                x: () => window.innerWidth + 100,
+                y: () => (Math.random() - 0.5) * window.innerHeight * 2,
+                z: () => Math.random() * 1500
+            },
+            final: {
+                opacity: 1,
+                scale: 1,
+                rotation: 0,
+                x: 0,
+                y: 0,
+                z: 0,
+                duration: 2.5,
+                ease: "back.out(1.7)"
+            }
+        },
+        letter: {
+            initial: {
+                opacity: 0,
+                scale: 0,
+                rotation: 180,
+                x: () => (Math.random() - 0.5) * window.innerWidth * 2.5,
+                y: () => (Math.random() - 0.5) * window.innerHeight * 2.5,
+                z: () => Math.random() * 1000
+            },
+            final: {
+                opacity: 1,
+                scale: 1,
+                rotation: 0,
+                x: 0,
+                y: 0,
+                z: 0,
+                duration: 2.2,
+                ease: "bounce.out"
+            }
+        },
+        symbol: {
+            initial: {
+                opacity: 0,
+                scale: 0,
+                rotation: 540,
+                x: () => -window.innerWidth - 100,
+                y: () => (Math.random() - 0.5) * window.innerHeight * 2,
+                z: () => Math.random() * 1200
+            },
+            final: {
+                opacity: 1,
+                scale: 1,
+                rotation: 0,
+                x: 0,
+                y: 0,
+                z: 0,
+                duration: 2.3,
+                ease: "power3.out"
+            }
+        },
+        space: {
+            initial: {
+                opacity: 0,
+                scale: 0,
+                rotation: 0,
+                x: () => (Math.random() - 0.5) * window.innerWidth * 1.5,
+                y: () => window.innerHeight + 100,
+                z: () => Math.random() * 800
+            },
+            final: {
+                opacity: 1,
+                scale: 1,
+                rotation: 0,
+                x: 0,
+                y: 0,
+                z: 0,
+                duration: 3.2,
+                ease: "elastic.out(1, 0.5)"
+            }
+        },
+        enter: {
+            initial: {
+                opacity: 0,
+                scale: 0,
+                rotation: 360,
+                x: () => window.innerWidth + 200,
+                y: () => -window.innerHeight - 200,
+                z: () => Math.random() * 1800
+            },
+            final: {
+                opacity: 1,
+                scale: 1,
+                rotation: 0,
+                x: 0,
+                y: 0,
+                z: 0,
+                duration: 3.5,
+                ease: "back.out(2)"
+            }
+        },
+        backspace: {
+            initial: {
+                opacity: 0,
+                scale: 0,
+                rotation: -720,
+                x: () => -window.innerWidth - 200,
+                y: () => -window.innerHeight - 200,
+                z: () => Math.random() * 2000
+            },
+            final: {
+                opacity: 1,
+                scale: 1,
+                rotation: 0,
+                x: 0,
+                y: 0,
+                z: 0,
+                duration: 3.3,
+                ease: "elastic.out(1, 0.4)"
+            }
+        },
+        shift: {
+            initial: {
+                opacity: 0,
+                scale: 0,
+                rotation: 270,
+                x: () => (Math.random() - 0.5) * window.innerWidth * 3,
+                y: () => window.innerHeight + 200,
+                z: () => Math.random() * 1600
+            },
+            final: {
+                opacity: 1,
+                scale: 1,
+                rotation: 0,
+                x: 0,
+                y: 0,
+                z: 0,
+                duration: 2.8,
+                ease: "power4.out"
+            }
+        },
+        control: {
+            initial: {
+                opacity: 0,
+                scale: 0,
+                rotation: 90,
+                x: () => (Math.random() - 0.5) * window.innerWidth * 2.8,
+                y: () => (Math.random() - 0.5) * window.innerHeight * 2.8,
+                z: () => Math.random() * 1400
+            },
+            final: {
+                opacity: 1,
+                scale: 1,
+                rotation: 0,
+                x: 0,
+                y: 0,
+                z: 0,
+                duration: 2.6,
+                ease: "power2.out"
+            }
+        },
+        arrow: {
+            initial: {
+                opacity: 0,
+                scale: 0,
+                rotation: 180,
+                x: () => window.innerWidth + 300,
+                y: () => window.innerHeight + 300,
+                z: () => Math.random() * 2200
+            },
+            final: {
+                opacity: 1,
+                scale: 1,
+                rotation: 0,
+                x: 0,
+                y: 0,
+                z: 0,
+                duration: 3.1,
+                ease: "back.out(1.5)"
+            }
+        },
+        tab: {
+            initial: {
+                opacity: 0,
+                scale: 0,
+                rotation: 450,
+                x: () => -window.innerWidth - 300,
+                y: () => window.innerHeight + 300,
+                z: () => Math.random() * 1900
+            },
+            final: {
+                opacity: 1,
+                scale: 1,
+                rotation: 0,
+                x: 0,
+                y: 0,
+                z: 0,
+                duration: 3.4,
+                ease: "elastic.out(1, 0.6)"
+            }
+        },
+        caps: {
+            initial: {
+                opacity: 0,
+                scale: 0,
+                rotation: -540,
+                x: () => (Math.random() - 0.5) * window.innerWidth * 3.2,
+                y: () => -window.innerHeight - 300,
+                z: () => Math.random() * 2400
+            },
+            final: {
+                opacity: 1,
+                scale: 1,
+                rotation: 0,
+                x: 0,
+                y: 0,
+                z: 0,
+                duration: 3.6,
+                ease: "back.out(2.5)"
+            }
+        },
+        default: {
+            initial: {
+                opacity: 0,
+                scale: 0,
+                rotation: 360,
+                x: () => (Math.random() - 0.5) * window.innerWidth * 2,
+                y: () => (Math.random() - 0.5) * window.innerHeight * 2,
+                z: () => Math.random() * 1000
+            },
+            final: {
+                opacity: 1,
+                scale: 1,
+                rotation: 0,
+                x: 0,
+                y: 0,
+                z: 0,
+                duration: 2.7,
+                ease: "back.out(1.7)"
+            }
+        }
+    };
+    
+    return animations[keyType] || animations.default;
+}
+
 // Initialize additional effects
 document.addEventListener('DOMContentLoaded', function() {
     addHoverEffects();
     addParallaxEffect();
-    addLoadingAnimation();
+    
+    // Start with flying keys animation instead of loading animation
+    animateFlyingKeys();
 });
 
 

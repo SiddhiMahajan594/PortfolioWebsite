@@ -53,7 +53,7 @@ header {
 
 .title {
     font-family: 'Namaku', 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-    font-size: 5rem;
+    font-size: 7rem;
     font-weight: 700;
     color: var(--space-cadet);
     letter-spacing: 0.1em;
@@ -74,6 +74,7 @@ header {
     overflow: hidden;
     white-space: nowrap;
     border-right: 3px solid var(--sapphire);
+    opacity: 0;
 }
 
 .siddhi-text {
@@ -129,21 +130,23 @@ header {
     background: var(--dun);
     border: 3px solid var(--space-cadet);
     border-radius: 12px;
-    padding: 1.5rem;
+    padding: 2rem;
     box-shadow: 
-        0 8px 16px rgba(22, 22, 50, 0.15),
-        0 4px 8px rgba(22, 22, 50, 0.08);
+        3px 3px 0 var(--space-cadet),
+        0 0 0 1px var(--space-cadet);
     display: flex;
     flex-direction: column;
-    gap: 0.4rem;
-    max-width: 1200px;
+    gap: 0.6rem;
+    max-width: 1400px;
     width: 100%;
     position: relative;
+    opacity: 0;
+    transform: scale(0.8);
 }
 
 .keyboard-row {
     display: flex;
-    gap: 0.5rem;
+    gap: 0.7rem;
     justify-content: center;
 }
 
@@ -171,15 +174,15 @@ header {
     background: var(--dun);
     border: 2px solid var(--space-cadet);
     border-radius: 6px;
-    padding: 0.8rem 0.6rem;
-    min-width: 55px;
-    height: 55px;
+    padding: 1rem 0.8rem;
+    min-width: 65px;
+    height: 65px;
     display: flex;
     align-items: center;
     justify-content: center;
     font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
     font-weight: 500;
-    font-size: 0.85rem;
+    font-size: 1rem;
     color: var(--space-cadet);
     cursor: pointer;
     transition: all 0.1s ease;
@@ -188,18 +191,17 @@ header {
     -webkit-tap-highlight-color: transparent;
     touch-action: manipulation;
     box-shadow: 
-        3px 3px 0 #000,
-        0 0 0 1px #000;
+        3px 3px 0 var(--space-cadet),
+        0 0 0 1px var(--space-cadet);
+    opacity: 0;
+    transform: scale(0) rotate(360deg);
 }
 
 .key:hover {
-    background: var(--giants-orange);
-    color: white;
     transform: translateY(-1px);
     box-shadow: 
-        2px 2px 0 #000,
-        0 0 0 1px #000;
-    border-color: var(--giants-orange);
+        2px 2px 0 var(--space-cadet),
+        0 0 0 1px var(--space-cadet);
 }
 
 .key:active {
@@ -207,8 +209,8 @@ header {
     background: var(--sapphire);
     color: white;
     box-shadow: 
-        1px 1px 0 #000,
-        0 0 0 1px #000,
+        1px 1px 0 var(--space-cadet),
+        0 0 0 1px var(--space-cadet),
         inset 0 1px 2px rgba(0, 0, 0, 0.1);
     border-color: var(--sapphire);
 }
@@ -219,8 +221,8 @@ header {
     color: white !important;
     transform: translateY(-1px) scale(1.02) !important;
     box-shadow: 
-        2px 2px 0 #000,
-        0 0 0 1px #000 !important;
+        2px 2px 0 var(--space-cadet),
+        0 0 0 1px var(--space-cadet) !important;
     transition: all 0.1s ease !important;
     z-index: 10;
     position: relative;
@@ -258,15 +260,15 @@ header {
 }
 
 .space-key {
-    min-width: 280px;
+    min-width: 400px;
 }
 
 .control-key {
-    min-width: 60px;
+    min-width: 70px;
 }
 
 .arrow-key {
-    min-width: 55px;
+    min-width: 65px;
 }
 
 
@@ -284,13 +286,13 @@ header {
 
 
 .top-char {
-    font-size: 0.75rem;
+    font-size: 0.85rem;
     font-weight: 500;
     color: var(--space-cadet);
 }
 
 .bottom-char {
-    font-size: 0.9rem;
+    font-size: 1rem;
     font-weight: 500;
     color: var(--space-cadet);
 }
@@ -312,19 +314,25 @@ header {
 /* Responsive Design */
 @media (max-width: 1200px) {
     .keyboard {
-        padding: 1.5rem;
-        gap: 0.4rem;
+        padding: 1.8rem;
+        gap: 0.5rem;
+        box-shadow: 
+            2px 2px 0 var(--space-cadet),
+            0 0 0 1px var(--space-cadet);
     }
     
     .key {
-        min-width: 50px;
-        height: 50px;
-        padding: 0.8rem 0.6rem;
-        font-size: 0.8rem;
+        min-width: 60px;
+        height: 60px;
+        padding: 0.9rem 0.7rem;
+        font-size: 0.9rem;
+        box-shadow: 
+            2px 2px 0 var(--space-cadet),
+            0 0 0 1px var(--space-cadet);
     }
     
     .space-key {
-        min-width: 250px;
+        min-width: 350px;
     }
 }
 
@@ -334,20 +342,26 @@ header {
     }
     
     .keyboard {
-        padding: 1.2rem;
-        gap: 0.3rem;
-        max-width: 900px;
+        padding: 1.5rem;
+        gap: 0.4rem;
+        max-width: 1000px;
+        box-shadow: 
+            2px 2px 0 var(--space-cadet),
+            0 0 0 1px var(--space-cadet);
     }
     
     .key {
-        min-width: 45px;
-        height: 45px;
-        padding: 0.7rem 0.5rem;
-        font-size: 0.75rem;
+        min-width: 55px;
+        height: 55px;
+        padding: 0.8rem 0.6rem;
+        font-size: 0.85rem;
+        box-shadow: 
+            2px 2px 0 var(--space-cadet),
+            0 0 0 1px var(--space-cadet);
     }
     
     .space-key {
-        min-width: 200px;
+        min-width: 300px;
     }
     
     .title {
@@ -376,6 +390,9 @@ header {
         gap: 0.2rem;
         max-width: 100%;
         border-radius: 10px;
+        box-shadow: 
+            1px 1px 0 var(--space-cadet),
+            0 0 0 1px var(--space-cadet);
     }
     
     .keyboard-row {
@@ -391,6 +408,9 @@ header {
         font-size: 0.7rem;
         border-radius: 6px;
         flex-shrink: 0;
+        box-shadow: 
+            1px 1px 0 var(--space-cadet),
+            0 0 0 1px var(--space-cadet);
     }
     
     .space-key {
@@ -465,6 +485,9 @@ header {
         padding: 0.4rem;
         gap: 0.15rem;
         border-radius: 8px;
+        box-shadow: 
+            1px 1px 0 var(--space-cadet),
+            0 0 0 1px var(--space-cadet);
     }
     
     .keyboard-row {
@@ -480,6 +503,9 @@ header {
         font-size: 0.6rem;
         border-radius: 4px;
         flex-shrink: 0;
+        box-shadow: 
+            1px 1px 0 var(--space-cadet),
+            0 0 0 1px var(--space-cadet);
     }
     
     .space-key {
@@ -551,6 +577,9 @@ header {
     .keyboard {
         padding: 0.3rem;
         gap: 0.1rem;
+        box-shadow: 
+            1px 1px 0 var(--space-cadet),
+            0 0 0 1px var(--space-cadet);
     }
     
     .keyboard-row {
@@ -562,6 +591,9 @@ header {
         height: 28px;
         padding: 0.3rem 0.2rem;
         font-size: 0.55rem;
+        box-shadow: 
+            1px 1px 0 var(--space-cadet),
+            0 0 0 1px var(--space-cadet);
     }
     
     .space-key {
