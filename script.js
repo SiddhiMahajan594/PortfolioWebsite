@@ -338,12 +338,33 @@ function addHoverEffects() {
 // Add scroll effects for navigation keys
 function addScrollEffects() {
     const navKeys = document.querySelectorAll('.nav-key');
+    
+    // Function to find specific letter keys by their text content
+    function findLetterKey(letter) {
+        const letterKeys = document.querySelectorAll('.key.letter-key');
+        for (let key of letterKeys) {
+            if (key.textContent.trim() === letter) {
+                return key;
+            }
+        }
+        return null;
+    }
+    
     const originalKeys = {
-        'A': document.querySelector('.key.letter-key'),
-        'S': document.querySelectorAll('.key.letter-key')[18], // S key
-        'P': document.querySelectorAll('.key.letter-key')[15], // P key
-        'C': document.querySelectorAll('.key.letter-key')[2]   // C key
+        'A': findLetterKey('A'),
+        'S': findLetterKey('S'),
+        'P': findLetterKey('P'),
+        'C': findLetterKey('C')
     };
+    
+    // Debug: Log which keys were found
+    Object.keys(originalKeys).forEach(key => {
+        if (originalKeys[key]) {
+            console.log(`Found key ${key}:`, originalKeys[key].textContent);
+        } else {
+            console.log(`Key ${key} not found`);
+        }
+    });
     
     let keysFlying = false;
     
@@ -375,40 +396,58 @@ function flyKeysToHeader(originalKeys, navKeys) {
         const navKey = navKeyMap[key];
         
         if (originalKey && navKey) {
-            // Get original key position
+            console.log(`Flying key ${key} from keyboard to header`);
+            
+            // Get original key position relative to viewport
             const rect = originalKey.getBoundingClientRect();
-            const startX = rect.left + window.pageXOffset;
-            const startY = rect.top + window.pageYOffset;
+            const startX = rect.left;
+            const startY = rect.top;
             
             // Get nav key position
             const navRect = navKey.getBoundingClientRect();
             const endX = navRect.left;
             const endY = navRect.top;
             
-            // Create flying key clone
+            // Create flying key clone with exact styling
             const flyingKey = originalKey.cloneNode(true);
             flyingKey.style.position = 'fixed';
             flyingKey.style.left = startX + 'px';
             flyingKey.style.top = startY + 'px';
             flyingKey.style.zIndex = '9999';
             flyingKey.style.pointerEvents = 'none';
+            flyingKey.style.transform = 'none';
+            flyingKey.style.transition = 'none';
+            flyingKey.style.boxShadow = originalKey.style.boxShadow || 
+                '3px 3px 0 var(--space-cadet), 0 0 0 1px var(--space-cadet)';
             document.body.appendChild(flyingKey);
             
-            // Animate flying key
-            gsap.to(flyingKey, {
-                x: endX - startX,
-                y: endY - startY,
-                scale: 0.8,
-                rotation: 360,
-                duration: 1.5,
-                ease: "back.out(1.7)",
-                onComplete: () => {
-                    // Remove flying key
-                    document.body.removeChild(flyingKey);
-                    // Show nav key
-                    navKey.classList.add('visible');
+            // Calculate the exact movement needed
+            const deltaX = endX - startX;
+            const deltaY = endY - startY;
+            
+            // Animate flying key with precise movement
+            gsap.fromTo(flyingKey, 
+                {
+                    x: 0,
+                    y: 0,
+                    scale: 1,
+                    rotation: 0
+                },
+                {
+                    x: deltaX,
+                    y: deltaY,
+                    scale: 0.8,
+                    rotation: 360,
+                    duration: 2,
+                    ease: "back.out(1.7)",
+                    onComplete: () => {
+                        // Remove flying key
+                        document.body.removeChild(flyingKey);
+                        // Show nav key
+                        navKey.classList.add('visible');
+                    }
                 }
-            });
+            );
             
             // Hide original key
             gsap.to(originalKey, {
@@ -416,18 +455,77 @@ function flyKeysToHeader(originalKeys, navKeys) {
                 scale: 0.9,
                 duration: 0.5
             });
+        } else {
+            console.log(`Could not find key ${key} or nav key`);
         }
     });
 }
 
 // Return keys to keyboard
 function returnKeysToKeyboard(originalKeys, navKeys) {
-    navKeys.forEach(navKey => {
-        navKey.classList.remove('visible');
-    });
+    const navKeyMap = {
+        'A': navKeys[0], // About
+        'S': navKeys[1], // Skills
+        'P': navKeys[2], // Projects
+        'C': navKeys[3]  // Contact
+    };
     
-    Object.values(originalKeys).forEach(originalKey => {
-        if (originalKey) {
+    Object.keys(originalKeys).forEach((key, index) => {
+        const originalKey = originalKeys[key];
+        const navKey = navKeyMap[key];
+        
+        if (originalKey && navKey) {
+            // Get original key position
+            const rect = originalKey.getBoundingClientRect();
+            const endX = rect.left;
+            const endY = rect.top;
+            
+            // Get nav key position
+            const navRect = navKey.getBoundingClientRect();
+            const startX = navRect.left;
+            const startY = navRect.top;
+            
+            // Create flying key clone
+            const flyingKey = navKey.cloneNode(true);
+            flyingKey.style.position = 'fixed';
+            flyingKey.style.left = startX + 'px';
+            flyingKey.style.top = startY + 'px';
+            flyingKey.style.zIndex = '9999';
+            flyingKey.style.pointerEvents = 'none';
+            flyingKey.style.transform = 'none';
+            flyingKey.style.transition = 'none';
+            document.body.appendChild(flyingKey);
+            
+            // Calculate the exact movement needed
+            const deltaX = endX - startX;
+            const deltaY = endY - startY;
+            
+            // Animate flying key back to keyboard
+            gsap.fromTo(flyingKey, 
+                {
+                    x: 0,
+                    y: 0,
+                    scale: 0.8,
+                    rotation: 0
+                },
+                {
+                    x: deltaX,
+                    y: deltaY,
+                    scale: 1,
+                    rotation: -360,
+                    duration: 1.5,
+                    ease: "back.out(1.7)",
+                    onComplete: () => {
+                        // Remove flying key
+                        document.body.removeChild(flyingKey);
+                    }
+                }
+            );
+            
+            // Hide nav key
+            navKey.classList.remove('visible');
+            
+            // Restore original key
             gsap.to(originalKey, {
                 opacity: 1,
                 scale: 1,
