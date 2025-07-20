@@ -335,6 +335,108 @@ function addHoverEffects() {
     });
 }
 
+// Add scroll effects for navigation keys
+function addScrollEffects() {
+    const navKeys = document.querySelectorAll('.nav-key');
+    const originalKeys = {
+        'A': document.querySelector('.key.letter-key'),
+        'S': document.querySelectorAll('.key.letter-key')[18], // S key
+        'P': document.querySelectorAll('.key.letter-key')[15], // P key
+        'C': document.querySelectorAll('.key.letter-key')[2]   // C key
+    };
+    
+    let keysFlying = false;
+    
+    window.addEventListener('scroll', function() {
+        const scrolled = window.pageYOffset;
+        const triggerPoint = 300; // Start effect after 300px scroll
+        
+        if (scrolled > triggerPoint && !keysFlying) {
+            keysFlying = true;
+            flyKeysToHeader(originalKeys, navKeys);
+        } else if (scrolled <= triggerPoint && keysFlying) {
+            keysFlying = false;
+            returnKeysToKeyboard(originalKeys, navKeys);
+        }
+    });
+}
+
+// Fly keys to header
+function flyKeysToHeader(originalKeys, navKeys) {
+    const navKeyMap = {
+        'A': navKeys[0], // About
+        'S': navKeys[1], // Skills
+        'P': navKeys[2], // Projects
+        'C': navKeys[3]  // Contact
+    };
+    
+    Object.keys(originalKeys).forEach((key, index) => {
+        const originalKey = originalKeys[key];
+        const navKey = navKeyMap[key];
+        
+        if (originalKey && navKey) {
+            // Get original key position
+            const rect = originalKey.getBoundingClientRect();
+            const startX = rect.left + window.pageXOffset;
+            const startY = rect.top + window.pageYOffset;
+            
+            // Get nav key position
+            const navRect = navKey.getBoundingClientRect();
+            const endX = navRect.left;
+            const endY = navRect.top;
+            
+            // Create flying key clone
+            const flyingKey = originalKey.cloneNode(true);
+            flyingKey.style.position = 'fixed';
+            flyingKey.style.left = startX + 'px';
+            flyingKey.style.top = startY + 'px';
+            flyingKey.style.zIndex = '9999';
+            flyingKey.style.pointerEvents = 'none';
+            document.body.appendChild(flyingKey);
+            
+            // Animate flying key
+            gsap.to(flyingKey, {
+                x: endX - startX,
+                y: endY - startY,
+                scale: 0.8,
+                rotation: 360,
+                duration: 1.5,
+                ease: "back.out(1.7)",
+                onComplete: () => {
+                    // Remove flying key
+                    document.body.removeChild(flyingKey);
+                    // Show nav key
+                    navKey.classList.add('visible');
+                }
+            });
+            
+            // Hide original key
+            gsap.to(originalKey, {
+                opacity: 0.3,
+                scale: 0.9,
+                duration: 0.5
+            });
+        }
+    });
+}
+
+// Return keys to keyboard
+function returnKeysToKeyboard(originalKeys, navKeys) {
+    navKeys.forEach(navKey => {
+        navKey.classList.remove('visible');
+    });
+    
+    Object.values(originalKeys).forEach(originalKey => {
+        if (originalKey) {
+            gsap.to(originalKey, {
+                opacity: 1,
+                scale: 1,
+                duration: 0.5
+            });
+        }
+    });
+}
+
 // Add parallax effect to keyboard
 function addParallaxEffect() {
     window.addEventListener('scroll', function() {
@@ -371,11 +473,21 @@ function animateFlyingKeys() {
     const keys = document.querySelectorAll('.key');
     const keyboard = document.querySelector('.keyboard');
     
-    // Animate keyboard appearance
+    // Set initial position for keyboard (below screen)
+    gsap.set(keyboard, {
+        opacity: 0,
+        scale: 0.8,
+        y: window.innerHeight + 200,
+        rotation: -5
+    });
+    
+    // Animate keyboard flying up from below
     gsap.to(keyboard, {
         opacity: 1,
         scale: 1,
-        duration: 1,
+        y: 0,
+        rotation: 0,
+        duration: 2,
         ease: "back.out(1.7)"
     });
     
@@ -692,6 +804,7 @@ function getKeyAnimation(keyType, index) {
 document.addEventListener('DOMContentLoaded', function() {
     addHoverEffects();
     addParallaxEffect();
+    addScrollEffects();
     
     // Start with flying keys animation instead of loading animation
     animateFlyingKeys();

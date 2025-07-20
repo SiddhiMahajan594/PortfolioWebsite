@@ -41,6 +41,117 @@ body {
 header {
     text-align: center;
     margin-bottom: 3rem;
+    position: relative;
+    z-index: 100;
+}
+
+/* Navigation keys that fly to header */
+.nav-key {
+    position: fixed;
+    top: 20px;
+    background: var(--dun);
+    border: 2px solid var(--space-cadet);
+    border-radius: 6px;
+    padding: 0.8rem 1rem;
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+    font-weight: 500;
+    font-size: 0.9rem;
+    color: var(--space-cadet);
+    cursor: pointer;
+    transition: all 0.3s ease;
+    box-shadow: 
+        2px 2px 0 var(--space-cadet),
+        0 0 0 1px var(--space-cadet);
+    z-index: 1000;
+    opacity: 0;
+    transform: scale(0.8);
+}
+
+.nav-key:hover {
+    background: var(--giants-orange);
+    color: white;
+    border-color: var(--giants-orange);
+    transform: scale(1.05);
+}
+
+.nav-key.visible {
+    opacity: 1;
+    transform: scale(1);
+}
+
+/* Navigation layout */
+.nav-key.about { left: 20px; }
+.nav-key.skills { left: 120px; }
+.nav-key.projects { left: 220px; }
+.nav-key.contact { left: 320px; }
+
+/* Content sections for scrolling */
+.content-section {
+    min-height: 100vh;
+    padding: 4rem 2rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: var(--dun-2);
+    border-top: 3px solid var(--space-cadet);
+    position: relative;
+}
+
+.content-section:nth-child(even) {
+    background: var(--dun);
+}
+
+.section-content {
+    max-width: 800px;
+    text-align: center;
+    padding: 2rem;
+    background: var(--dun);
+    border: 3px solid var(--space-cadet);
+    border-radius: 12px;
+    box-shadow: 
+        3px 3px 0 var(--space-cadet),
+        0 0 0 1px var(--space-cadet);
+}
+
+.section-content h2 {
+    font-family: 'Namaku', 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+    font-size: 3rem;
+    font-weight: 700;
+    color: var(--space-cadet);
+    margin-bottom: 2rem;
+    text-shadow: 
+        -1px -1px 0 var(--space-cadet),
+        1px -1px 0 var(--space-cadet),
+        -1px 1px 0 var(--space-cadet),
+        1px 1px 0 var(--space-cadet);
+}
+
+.section-content p {
+    font-size: 1.2rem;
+    line-height: 1.8;
+    color: var(--space-cadet);
+    margin-bottom: 1.5rem;
+    font-weight: 500;
+}
+
+/* Responsive design for sections */
+@media (max-width: 768px) {
+    .content-section {
+        padding: 2rem 1rem;
+        min-height: 80vh;
+    }
+    
+    .section-content {
+        padding: 1.5rem;
+    }
+    
+    .section-content h2 {
+        font-size: 2rem;
+    }
+    
+    .section-content p {
+        font-size: 1rem;
+    }
 }
 
 @font-face {
@@ -202,6 +313,9 @@ header {
     box-shadow: 
         2px 2px 0 var(--space-cadet),
         0 0 0 1px var(--space-cadet);
+    background: var(--giants-orange);
+    color: white;
+    border-color: var(--giants-orange);
 }
 
 .key:active {
