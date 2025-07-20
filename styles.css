@@ -58,61 +58,9 @@ header {
     z-index: 100;
 }
 
-/* Navigation keys that fly to header */
-.nav-key {
-    position: fixed;
-    top: 20px;
-    background: var(--dun);
-    border: 2px solid var(--space-cadet);
-    border-radius: 6px;
-    padding: 0.8rem 1rem;
-    font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-    font-weight: 500;
-    font-size: 0.9rem;
-    color: var(--space-cadet);
-    cursor: pointer;
-    transition: all 0.3s ease;
-    box-shadow: 
-        2px 2px 0 var(--space-cadet),
-        0 0 0 1px var(--space-cadet);
-    z-index: 1000;
-    opacity: 0;
-    transform: scale(0.8);
-}
+/* Removed .nav-key and related classes since navigation keys are no longer used */
 
-.nav-key:hover {
-    background: var(--giants-orange);
-    color: white;
-    border-color: var(--giants-orange);
-    transform: scale(1.05);
-}
-
-.nav-key.visible {
-    opacity: 1;
-    transform: scale(1);
-}
-
-/* Navigation layout */
-.nav-key.about { left: 20px; }
-.nav-key.skills { left: 120px; }
-.nav-key.projects { left: 220px; }
-.nav-key.contact { left: 320px; }
-
-/* Content sections for scrolling */
-.content-section {
-    min-height: 100vh;
-    padding: 4rem 2rem;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    background: var(--dun-2);
-    border-top: 3px solid var(--space-cadet);
-    position: relative;
-}
-
-.content-section:nth-child(even) {
-    background: var(--dun);
-}
+/* Removed scrollable section styles since those sections have been removed from the HTML */
 
 .section-content {
     max-width: 800px;
@@ -145,6 +93,15 @@ header {
     color: var(--space-cadet);
     margin-bottom: 1.5rem;
     font-weight: 500;
+}
+
+.about-section {
+    background: var(--giants-orange);
+    height: 100vh;
+    width: 120%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 
 /* Responsive design for sections */
