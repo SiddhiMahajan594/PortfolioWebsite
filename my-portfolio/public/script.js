@@ -2,11 +2,11 @@
 const keys = document.querySelectorAll('.key');
 
 // Initialize the application
-document.addEventListener('DOMContentLoaded', function() {
+setTimeout(function() {
     initializeKeyboard();
     addKeyboardSoundEffects();
     // addTypingEffect();
-});
+}, 0);
 
 // Initialize keyboard functionality
 function initializeKeyboard() {

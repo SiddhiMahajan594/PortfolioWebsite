@@ -1,4 +1,8 @@
-@import "tailwindcss";
+
+@import "tailwindcss/base"; 
+@import "tailwindcss/components"; 
+@import "tailwindcss/utilities";
+
 /* SCSS Color Palette as CSS Custom Properties */
 :root {
   --dun: #CDC3B3;
@@ -38,7 +42,7 @@ body {
   display: flex;
   align-items: center;
   justify-content: center;
-  padding-top: 80px; /* Add space for the fixed navbar */
+  padding-top: 80px;
 }
 
 .container {
@@ -59,81 +63,8 @@ header {
   z-index: 100;
 }
 
-/* Removed .nav-key and related classes since navigation keys are no longer used */
-
-/* Removed scrollable section styles since those sections have been removed from the HTML */
-
-.section-content {
-  max-width: 800px;
-  text-align: center;
-  padding: 2rem;
-  background: var(--dun);
-  border: 3px solid var(--space-cadet);
-  border-radius: 12px;
-  box-shadow: 
-      3px 3px 0 var(--space-cadet),
-      0 0 0 1px var(--space-cadet);
-}
-
-.section-content h2 {
-  font-family: 'Namaku', 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-  font-size: 3rem;
-  font-weight: 700;
-  color: var(--space-cadet);
-  margin-bottom: 2rem;
-  text-shadow: 
-      -1px -1px 0 var(--space-cadet),
-      1px -1px 0 var(--space-cadet),
-      -1px 1px 0 var(--space-cadet),
-      1px 1px 0 var(--space-cadet);
-}
-
-.section-content p {
-  font-size: 1.2rem;
-  line-height: 1.8;
-  color: var(--space-cadet);
-  margin-bottom: 1.5rem;
-  font-weight: 500;
-}
-
-.about-section {
-  background: var(--giants-orange);
-  height: 100vh;
-  width: 120%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-
-/* Responsive design for sections */
-@media (max-width: 768px) {
-  .content-section {
-      padding: 2rem 1rem;
-      min-height: 80vh;
-  }
-  
-  .section-content {
-      padding: 1.5rem;
-  }
-  
-  .section-content h2 {
-      font-size: 2rem;
-  }
-  
-  .section-content p {
-      font-size: 1rem;
-  }
-}
-
-@font-face {
-  font-family: 'Namaku';
-  src: url('/fonts/Namaku.ttf') format('truetype');
-  font-weight: normal;
-  font-style: normal;
-}
-
 .title {
-  font-family: 'Namaku', 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
   font-size: 7rem;
   font-weight: 700;
   color: var(--space-cadet);
@@ -155,7 +86,7 @@ header {
   overflow: hidden;
   white-space: nowrap;
   border-right: 3px solid var(--sapphire);
-  opacity: 0;
+  opacity: 1;
 }
 
 .siddhi-text {
@@ -170,25 +101,7 @@ header {
   color: var(--space-cadet);
   font-weight: 700;
   animation: blink 1s infinite;
-  opacity: 0;
-}
-
-@keyframes typing {
-  from {
-      width: 0;
-  }
-  to {
-      width: 100%;
-  }
-}
-
-@keyframes blink-caret {
-  from, to {
-      border-color: transparent;
-  }
-  50% {
-      border-color: var(--space-cadet);
-  }
+  opacity: 1;
 }
 
 @keyframes blink {
@@ -221,8 +134,8 @@ header {
   max-width: 1400px;
   width: 100%;
   position: relative;
-  opacity: 0;
-  transform: scale(0.8);
+  opacity: 1;
+  transform: scale(1);
 }
 
 .keyboard-row {
@@ -231,26 +144,6 @@ header {
   justify-content: center;
 }
 
-.keyboard-rows-container {
-  display: grid;
-  grid-template-columns: 1fr auto;
-  gap: 0.5rem;
-  align-items: start;
-}
-
-.asdf-row {
-  display: flex;
-  gap: 0.5rem;
-  justify-content: center;
-}
-
-.zxcv-row {
-  display: flex;
-  gap: 0.5rem;
-  justify-content: center;
-}
-
-/* Key Base Styles */
 .key {
   background: var(--dun);
   border: 2px solid var(--space-cadet);
@@ -274,8 +167,8 @@ header {
   box-shadow: 
       3px 3px 0 var(--space-cadet),
       0 0 0 1px var(--space-cadet);
-  opacity: 0;
-  transform: scale(0) rotate(360deg);
+  opacity: 1;
+  transform: scale(1) rotate(0deg);
 }
 
 .key:hover {
@@ -355,8 +248,6 @@ header {
   min-width: 65px;
 }
 
-
-
 /* Number and Symbol Keys */
 .number-key, .symbol-key {
   display: flex;
@@ -366,8 +257,6 @@ header {
   gap: 2px;
   position: relative;
 }
-
-
 
 .top-char {
   font-size: 0.85rem;
@@ -381,18 +270,13 @@ header {
   color: var(--space-cadet);
 }
 
-
-
-/* Animations */
-@keyframes fadeIn {
-  from {
-      opacity: 0;
-      transform: translateY(20px);
-  }
-  to {
-      opacity: 1;
-      transform: translateY(0);
-  }
+.about-section {
+  background: var(--giants-orange);
+  height: 100vh;
+  width: 120%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 /* Responsive Design */
@@ -549,173 +433,9 @@ header {
   }
 }
 
-@media (max-width: 480px) {
-  .container {
-      padding: 0.3rem;
-  }
-  
-  .title {
-      font-size: 1.6rem;
-      flex-direction: column;
-      gap: 0.1rem;
-      margin-bottom: 1.5rem;
-  }
-  
-  .typing-text {
-      font-size: 1.6rem;
-  }
-  
-  .keyboard {
-      padding: 0.4rem;
-      gap: 0.15rem;
-      border-radius: 8px;
-      box-shadow: 
-          1px 1px 0 var(--space-cadet),
-          0 0 0 1px var(--space-cadet);
-  }
-  
-  .keyboard-row {
-      gap: 0.15rem;
-      flex-wrap: wrap;
-      justify-content: center;
-  }
-  
-  .key {
-      min-width: 32px;
-      height: 32px;
-      padding: 0.4rem 0.25rem;
-      font-size: 0.6rem;
-      border-radius: 4px;
-      flex-shrink: 0;
-      box-shadow: 
-          1px 1px 0 var(--space-cadet),
-          0 0 0 1px var(--space-cadet);
-  }
-  
-  .space-key {
-      min-width: 140px;
-      max-width: 160px;
-  }
-  
-  .function-key {
-      min-width: 28px;
-      font-size: 0.55rem;
-  }
-  
-  .tab-key {
-      min-width: 55px;
-  }
-  
-  .caps-key {
-      min-width: 60px;
-  }
-  
-  .shift-key {
-      min-width: 65px;
-  }
-  
-  .backspace-key {
-      min-width: 75px;
-  }
-  
-  .enter-key {
-      min-width: 55px;
-      height: 32px;
-  }
-  
-  .control-key {
-      min-width: 45px;
-  }
-  
-  .arrow-key {
-      min-width: 32px;
-  }
-  
-  .number-key, .symbol-key {
-      gap: 0.5px;
-  }
-  
-  .top-char {
-      font-size: 0.5rem;
-  }
-  
-  .bottom-char {
-      font-size: 0.7rem;
-  }
-}
 
-@media (max-width: 360px) {
-  .container {
-      padding: 0.2rem;
-  }
-  
-  .title {
-      font-size: 1.4rem;
-      margin-bottom: 1rem;
-  }
-  
-  .typing-text {
-      font-size: 1.4rem;
-  }
-  
-  .keyboard {
-      padding: 0.3rem;
-      gap: 0.1rem;
-      box-shadow: 
-          1px 1px 0 var(--space-cadet),
-          0 0 0 1px var(--space-cadet);
-  }
-  
-  .keyboard-row {
-      gap: 0.1rem;
-  }
-  
-  .key {
-      min-width: 28px;
-      height: 28px;
-      padding: 0.3rem 0.2rem;
-      font-size: 0.55rem;
-      box-shadow: 
-          1px 1px 0 var(--space-cadet),
-          0 0 0 1px var(--space-cadet);
-  }
-  
-  .space-key {
-      min-width: 120px;
-      max-width: 140px;
-  }
-  
-  .function-key {
-      min-width: 25px;
-      font-size: 0.5rem;
-  }
-  
-  .tab-key {
-      min-width: 45px;
-  }
-  
-  .caps-key {
-      min-width: 50px;
-  }
-  
-  .shift-key {
-      min-width: 55px;
-  }
-  
-  .backspace-key {
-      min-width: 65px;
-  }
-  
-  .enter-key {
-      min-width: 45px;
-      height: 28px;
-  }
-  
-  .control-key {
-      min-width: 40px;
-  }
-  
-  .arrow-key {
-      min-width: 28px;
-  }
-} 
+
+
+
+
+
