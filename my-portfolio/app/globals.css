@@ -86,7 +86,7 @@ header {
   overflow: hidden;
   white-space: nowrap;
   border-right: 3px solid var(--sapphire);
-  opacity: 1;
+  opacity: 0;
 }
 
 .siddhi-text {
@@ -101,7 +101,25 @@ header {
   color: var(--space-cadet);
   font-weight: 700;
   animation: blink 1s infinite;
-  opacity: 1;
+  opacity: 0;
+}
+
+@keyframes typing {
+  from {
+      width: 0;
+  }
+  to {
+      width: 100%;
+  }
+}
+
+@keyframes blink-caret {
+  from, to {
+      border-color: transparent;
+  }
+  50% {
+      border-color: var(--space-cadet);
+  }
 }
 
 @keyframes blink {
@@ -111,6 +129,28 @@ header {
   51%, 100% {
       opacity: 0;
   }
+}
+
+@keyframes fadeIn {
+  from {
+      opacity: 0;
+      transform: translateY(20px);
+  }
+  to {
+      opacity: 1;
+      transform: translateY(0);
+  }
+}
+
+.key {
+  opacity: 0;
+  transform: scale(0) rotate(360deg);
+  transition: all 0.1s ease;
+}
+
+.keyboard {
+  opacity: 0;
+  transform: scale(0.8);
 }
 
 /* Keyboard Container */
@@ -431,6 +471,10 @@ header {
   .bottom-char {
       font-size: 0.8rem;
   }
+}
+
+.keys-hidden .key {
+  visibility: hidden;
 }
 
 
