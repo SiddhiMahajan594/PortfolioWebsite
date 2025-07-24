@@ -321,7 +321,11 @@ export default function Home() {
           <h1 className="title" ref={titleRef}>
             <span className="typing-text" ref={typingRef}>
               {typedText.split('').map((char, i) => {
-                // Siddhi = 0-5, Portfolio = 10-18
+                // Handle space character to allow proper wrapping
+                if (char === ' ') {
+                  return <span key={i} style={{ whiteSpace: 'pre' }}> </span>;
+                }
+                // Siddhi = 0-7 (including apostrophe), Portfolio = 9-18
                 if (i >= 0 && i <= 7) {
                   return <span key={i} className="siddhi-text">{char}</span>;
                 } else if (i >= 9 && i <= 18) {
@@ -330,8 +334,11 @@ export default function Home() {
                   return <span key={i}>{char}</span>;
                 }
               })}
+              {/* Move cursor inside the typing-text span */}
+              {typedText.length > 0 && <span className="cursor">|</span>}
             </span>
-            <span className="cursor">|</span>
+            {/* Show cursor outside only if no text is typed yet */}
+            {typedText.length === 0 && <span className="cursor">|</span>}
           </h1>
         </header>
         <main className="keyboard-container">

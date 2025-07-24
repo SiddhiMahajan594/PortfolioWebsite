@@ -58,50 +58,63 @@ body {
 /* Header */
 header {
   text-align: center;
-  margin-bottom: 3rem;
+  /* margin-bottom: 3rem; */
   position: relative;
   z-index: 100;
 }
 
+/* Alternative CSS approach for animated title and cursor */
 .title {
   font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-  font-size: 7rem;
+  font-size: clamp(2.5rem, 7vw, 7rem);
   font-weight: 700;
   color: var(--space-cadet);
   letter-spacing: 0.1em;
   margin-bottom: 1rem;
   display: flex;
-  align-items: center;
-  justify-content: center;
+  flex-wrap: wrap;
+  align-items: baseline;
   gap: 0.2rem;
   text-shadow: 
       -1px -1px 0 var(--space-cadet),
       1px -1px 0 var(--space-cadet),
       -1px 1px 0 var(--space-cadet),
       1px 1px 0 var(--space-cadet);
+  justify-content: center;
 }
 
-.typing-text {
+/* Each character span */
+.typing-text > span {
   display: inline-block;
-  overflow: hidden;
-  white-space: nowrap;
-  border-right: 3px solid var(--sapphire);
-  opacity: 0;
 }
 
-.siddhi-text {
-  color: var(--sapphire);
-}
-
-.portfolio-text {
-  color: var(--giants-orange);
+/* Handle line breaks more gracefully */
+.typing-text .space-char {
+  width: 0.3em; /* Control space width */
+  display: inline-block;
 }
 
 .cursor {
   color: var(--space-cadet);
   font-weight: 700;
   animation: blink 1s infinite;
-  opacity: 0;
+  opacity: 1;
+  display: inline-block;
+  vertical-align: baseline;
+  margin-left: 0.1em;
+  order: 999; /* Ensure cursor comes last in flex order */
+}
+
+.siddhi-text {
+  color: var(--sapphire);
+  font-family: 'Folker', 'Display Plan', 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  font-size: clamp(2.5rem, 7vw, 7rem);
+}
+
+.portfolio-text {
+  color: var(--giants-orange);
+  font-family: 'Folker', 'Display Plan', 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  font-size: clamp(2.5rem, 7vw, 7rem);
 }
 
 @keyframes typing {
@@ -164,13 +177,13 @@ header {
   background: var(--dun);
   border: 3px solid var(--space-cadet);
   border-radius: 12px;
-  padding: 2rem;
+  padding: clamp(0.5rem, 2vw, 2rem);
   box-shadow: 
       3px 3px 0 var(--space-cadet),
       0 0 0 1px var(--space-cadet);
   display: flex;
   flex-direction: column;
-  gap: 0.6rem;
+  gap: clamp(0.2rem, 1vw, 0.6rem);
   max-width: 1400px;
   width: 100%;
   position: relative;
@@ -180,23 +193,24 @@ header {
 
 .keyboard-row {
   display: flex;
-  gap: 0.7rem;
+  gap: clamp(0.1rem, 0.7vw, 0.7rem);
   justify-content: center;
+  flex-wrap: wrap;
 }
 
 .key {
   background: var(--dun);
   border: 2px solid var(--space-cadet);
   border-radius: 6px;
-  padding: 1rem 0.8rem;
-  min-width: 65px;
-  height: 65px;
+  padding: clamp(0.3rem, 2vw, 1rem) clamp(0.2rem, 1vw, 0.8rem);
+  min-width: clamp(28px, 6vw, 65px);
+  height: clamp(28px, 6vw, 65px);
   display: flex;
   align-items: center;
   justify-content: center;
   font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
   font-weight: 500;
-  font-size: 1rem;
+  font-size: clamp(0.55rem, 2vw, 1rem);
   color: var(--space-cadet);
   cursor: pointer;
   transition: all 0.1s ease;
@@ -251,41 +265,42 @@ header {
 
 /* Special Key Sizes */
 .function-key {
-  min-width: 45px;
-  font-size: 0.75rem;
+  min-width: clamp(20px, 3vw, 45px);
+  font-size: clamp(0.5rem, 1vw, 0.75rem);
 }
 
 .tab-key {
-  min-width: 70px;
+  min-width: clamp(30px, 6vw, 70px);
 }
 
 .caps-key {
-  min-width: 80px;
+  min-width: clamp(30px, 7vw, 80px);
 }
 
 .shift-key {
-  min-width: 90px;
+  min-width: clamp(30px, 8vw, 90px);
 }
 
 .backspace-key {
-  min-width: 100px;
+  min-width: clamp(30px, 10vw, 100px);
 }
 
 .enter-key {
-  min-width: 70px;
-  height: 55px;
+  min-width: clamp(30px, 7vw, 70px);
+  height: clamp(28px, 5vw, 55px);
 }
 
 .space-key {
-  min-width: 400px;
+  min-width: clamp(80px, 30vw, 400px);
+  max-width: 100vw;
 }
 
 .control-key {
-  min-width: 70px;
+  min-width: clamp(30px, 6vw, 70px);
 }
 
 .arrow-key {
-  min-width: 65px;
+  min-width: clamp(28px, 6vw, 65px);
 }
 
 /* Number and Symbol Keys */
@@ -294,18 +309,18 @@ header {
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  gap: 2px;
+  gap: clamp(1px, 0.3vw, 2px);
   position: relative;
 }
 
 .top-char {
-  font-size: 0.85rem;
+  font-size: clamp(0.4rem, 1vw, 0.85rem);
   font-weight: 500;
   color: var(--space-cadet);
 }
 
 .bottom-char {
-  font-size: 1rem;
+  font-size: clamp(0.5rem, 1.2vw, 1rem);
   font-weight: 500;
   color: var(--space-cadet);
 }
@@ -313,7 +328,9 @@ header {
 .about-section {
   background: var(--giants-orange);
   height: 100vh;
-  width: 120%;
+  width: 100vw;
+  min-width: 100vw;
+  position: relative;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -384,8 +401,6 @@ header {
   
   .title {
       font-size: 2rem;
-      flex-direction: column;
-      gap: 0.1rem;
       margin-bottom: 2rem;
   }
   
@@ -473,11 +488,87 @@ header {
   }
 }
 
+@media (max-width: 480px) {
+  .title {
+    gap: 0.1rem;
+  }
+  .portfolio-text {
+    display: inline-block;
+    margin-left: 0;
+  }
+  .siddhi-text {
+    margin-right: 0.2em;
+  }
+  .cursor {
+    margin-left: 0.05em;
+  }
+}
+
+@media (max-width: 480px) {
+  .container {
+    padding: 0.1rem;
+    width: 100vw;
+    max-width: 100vw;
+  }
+  .keyboard-container {
+    width: 100vw;
+    overflow-x: auto;
+  }
+  .title, .typing-text, .siddhi-text, .portfolio-text {
+    /* Remove fixed font-size, rely on clamp */
+    font-size: unset;
+  }
+}
+
 .keys-hidden .key {
   visibility: hidden;
 }
 
+@font-face {
+  font-family: 'Display Plan';
+  src: url('/font/Display Plan.ttf') format('truetype');
+  font-weight: normal;
+  font-style: normal;
+}
+@font-face {
+  font-family: 'Vegan';
+  src: url('/font/Vegan.ttf') format('truetype');
+  font-weight: normal;
+  font-style: normal;
+}
+@font-face {
+  font-family: 'Valeor';
+  src: url('/font/Valeor.ttf') format('truetype');
+  font-weight: normal;
+  font-style: normal;
+}
+@font-face {
+  font-family: 'Folker';
+  src: url('/font/Folker.ttf') format('truetype');
+  font-weight: normal;
+  font-style: normal;
+}
+@font-face {
+  font-family: 'Demarun-Regular';
+  src: url('/font/Demarun-Regular.ttf') format('truetype');
+  font-weight: normal;
+  font-style: normal;
+}
+@font-face {
+  font-family: 'Namaku';
+  src: url('/font/Namak.ttf') format('truetype');
+  font-weight: normal;
+  font-style: normal;
+}
 
+.mobile-title-break {
+  display: none;
+}
+@media (max-width: 480px) {
+  .mobile-title-break {
+    display: block;
+  }
+}
 
 
 
