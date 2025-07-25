@@ -1,9 +1,12 @@
 // app/page.tsx
 'use client';
 
-import { useEffect, useRef, useState } from 'react';
+import { useEffect, useRef, useState, MutableRefObject } from 'react';
 import gsap from 'gsap';
 import './globals.css';
+
+const headerKeysArray = ['A', 'S', 'P', 'C'] as const;
+type HeaderKey = typeof headerKeysArray[number];
 
 export default function Home() {
   const titleRef = useRef<HTMLHeadingElement>(null);
@@ -22,6 +25,22 @@ export default function Home() {
   const [typingDone, setTypingDone] = useState(false);
   const [typedText, setTypedText] = useState('');
   const fullText = "Siddhi's Portfolio";
+  const [showHeaderKeys, setShowHeaderKeys] = useState(false);
+  const [headerKeysVisible, setHeaderKeysVisible] = useState(false);
+  const [isAnimatingKeys, setIsAnimatingKeys] = useState(false);
+  const lastShowRef = useRef(false);
+  const keyRefs: Record<HeaderKey, MutableRefObject<HTMLDivElement | null>> = {
+    A: useRef<HTMLDivElement>(null),
+    S: useRef<HTMLDivElement>(null),
+    P: useRef<HTMLDivElement>(null),
+    C: useRef<HTMLDivElement>(null),
+  };
+  const headerKeyRefs: Record<HeaderKey, MutableRefObject<HTMLDivElement | null>> = {
+    A: useRef<HTMLDivElement>(null),
+    S: useRef<HTMLDivElement>(null),
+    P: useRef<HTMLDivElement>(null),
+    C: useRef<HTMLDivElement>(null),
+  };
 
   useEffect(() => {
     // Typing effect for the title
@@ -165,7 +184,70 @@ export default function Home() {
         { opacity: 1, y: 0, duration: 1, delay: 2.1, ease: 'power2.out' }
       );
     }
-  }, []);
+    // Sticky header keys scroll logic
+    let scrollTimeout: NodeJS.Timeout | null = null;
+    const handleScroll = () => {
+      if (isAnimatingKeys) return;
+      if (!keyboardRef.current) return;
+      const keyboardBottom = keyboardRef.current.getBoundingClientRect().bottom;
+      const shouldShow = keyboardBottom < 60; // 60px = navbar height
+      if (shouldShow !== lastShowRef.current) {
+        setIsAnimatingKeys(true);
+        const animations = headerKeysArray.map((k) => {
+          const fromEl = shouldShow ? keyRefs[k].current : headerKeyRefs[k].current;
+          const toEl = shouldShow ? headerKeyRefs[k].current : keyRefs[k].current;
+          if (!fromEl || !toEl) return Promise.resolve();
+          const fromRect = fromEl.getBoundingClientRect();
+          const toRect = toEl.getBoundingClientRect();
+          const dx = toRect.left - fromRect.left;
+          const dy = toRect.top - fromRect.top;
+          // Clone the key for animation
+          const clone = fromEl.cloneNode(true) as HTMLElement;
+          document.body.appendChild(clone);
+          Object.assign(clone.style, {
+            position: 'fixed',
+            left: fromRect.left + 'px',
+            top: fromRect.top + 'px',
+            width: fromRect.width + 'px',
+            height: fromRect.height + 'px',
+            zIndex: 3000,
+            margin: 0,
+            pointerEvents: 'none',
+          });
+          fromEl.style.visibility = 'hidden';
+          toEl.style.visibility = 'hidden';
+          return gsap.to(clone, {
+            x: dx,
+            y: dy,
+            duration: 0.6,
+            ease: 'power2.inOut',
+            onComplete: () => {
+              clone.remove();
+              fromEl.style.visibility = '';
+              toEl.style.visibility = '';
+            },
+          }).then(() => {});
+        });
+        Promise.all(animations).then(() => {
+          setShowHeaderKeys(shouldShow);
+          setTimeout(() => {
+            setHeaderKeysVisible(shouldShow);
+            setIsAnimatingKeys(false);
+          }, 10); // allow DOM to update
+        });
+      }
+      lastShowRef.current = shouldShow;
+    };
+    const debouncedScroll = () => {
+      if (scrollTimeout) clearTimeout(scrollTimeout);
+      scrollTimeout = setTimeout(handleScroll, 10);
+    };
+    window.addEventListener('scroll', debouncedScroll);
+    return () => {
+      window.removeEventListener('scroll', debouncedScroll);
+      if (scrollTimeout) clearTimeout(scrollTimeout);
+    };
+  }, [isAnimatingKeys]);
 
   useEffect(() => {
     // Initialize keyboard functionality after component mounts
@@ -315,7 +397,16 @@ export default function Home() {
 
   return (
     <>
-      <nav className="navbar"></nav>
+      <nav className="navbar">
+        {headerKeysVisible && (
+          <div className={`header-keys show`}
+               style={{ right: 0, left: 'auto', position: 'absolute', top: '50%', transform: 'translateY(-50%)' }}>
+            {headerKeysArray.map((key) => (
+              <div className="key header-key" key={key} ref={headerKeyRefs[key]} style={{ visibility: 'visible' }}>{key}</div>
+            ))}
+          </div>
+        )}
+      </nav>
       <div className="container">
         <header id="header">
           <h1 className="title" ref={titleRef}>
@@ -380,7 +471,9 @@ export default function Home() {
             <div className="keyboard-row" ref={rowRefs[3]}>
               <div className="key caps-key">Caps</div>
               {'ASDFGHJKL'.split('').map(letter => (
-                <div className="key letter-key" key={letter}>{letter}</div>
+                headerKeysArray.includes(letter as HeaderKey)
+                  ? <div className="key letter-key" key={letter} ref={keyRefs[letter as HeaderKey]} style={{ visibility: headerKeysVisible ? 'hidden' : 'visible' }}>{letter}</div>
+                  : <div className="key letter-key" key={letter}>{letter}</div>
               ))}
               {[[':', ';'], ['"', "'"]].map(([top, bottom], i) => (
                 <div className="key symbol-key" key={i}>

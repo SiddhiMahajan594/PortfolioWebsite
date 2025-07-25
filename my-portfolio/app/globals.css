@@ -30,6 +30,9 @@
   background-color: var(--space-cadet);
   z-index: 2000;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 body {
@@ -522,6 +525,46 @@ header {
 
 .keys-hidden .key {
   visibility: hidden;
+}
+
+.header-keys {
+  display: flex;
+  gap: 0.5rem;
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.3s;
+  z-index: 2100;
+}
+.header-keys.show {
+  opacity: 1;
+  pointer-events: auto;
+}
+.header-key {
+  background: var(--dun);
+  border: 2px solid var(--space-cadet);
+  border-radius: 6px;
+  padding: clamp(0.3rem, 2vw, 1rem) clamp(0.2rem, 1vw, 0.8rem);
+  min-width: clamp(28px, 6vw, 65px);
+  height: clamp(28px, 6vw, 65px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  font-weight: 500;
+  font-size: clamp(0.8rem, 2vw, 1.2rem);
+  color: var(--space-cadet);
+  box-shadow: 2px 2px 0 var(--space-cadet), 0 0 0 1px var(--space-cadet);
+  margin: 0 0.1rem;
+  transition: background 0.2s, color 0.2s;
+}
+.header-key:hover {
+  background: var(--giants-orange);
+  color: white;
+  border-color: var(--giants-orange);
 }
 
 @font-face {
